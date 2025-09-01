@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-<title>Settings</title>
-@include('layouts.heads')
+    <title>Settings</title>
+    @include('layouts.heads')
 </head>
 
 <body class="body">
@@ -44,9 +44,9 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <a href="{{ url('dash/index') }}">
-                                    <button class="btn btn-sm btn-outline-light rounded-pill px-3">
-                                        <i class="bi bi-house me-1"></i> Dashboard
-                                    </button>
+                                        <button class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                            <i class="bi bi-house me-1"></i> Dashboard
+                                        </button>
                                     </a>
                                 </div>
                             </div>
@@ -54,55 +54,51 @@
                     </div>
                 </div>
                 <!--end of header-->
-                
+
                 <!-- Tracker Models Section -->
                 <div class="card card-flush mb-5">
                     <div class="card-header d-flex justify-content-between align-items-center pt-2">
                         <div>
                             <h3 class="mt-2 text-warning mb-0">Manage Tracker Models</h3>
                         </div>
-                        <button class="btn btn-sm text-white" style="background-color: #2E3192;" data-bs-toggle="modal" data-bs-target="#addModelModal">
-                            <i class="bi bi-plus-circle me-1"></i> Add New Model
+                        <button class="btn btn-sm text-white" style="background-color:#2E3192;" data-bs-toggle="modal"
+                            data-bs-target="#uploadModal">
+                            <i class="bi bi-upload me-1"></i> Add Model
                         </button>
                     </div>
+                    
 
                     <div class="card-body pt-6">
                         <div class="table-responsive">
                             <table class="table table align-items-center border-warning" id="trackersTable">
                                 <thead>
                                     <tr class="fs-5 fw-bold text-dark border-bottom-2">
-                                        <th class="min-w-100px text-center">Model ID</th>
-                                        <th class="min-w-150px text-center">Model Name</th>
-                                        <th class="min-w-200px text-center">Description</th>
-                                        <th class="min-w-100px text-center">Status</th>
-                                        <th class="min-w-200px text-center">Actions</th>
+                                        <th class="min-w-100px text-center">SN</th>
+                                        <th class="min-w-100px text-center">Device Name</th>
+                                        <th class="min-w-150px text-center">Imei</th>
+                                        <th class="min-w-150px text-center">Company</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse ($trackers as $tracker)
                                     <tr class="fs-4 border-bottom-2 justify-content-center">
-                                        <td class="text-gray-600 fs-6 text-center">TRK-1001</td>
-                                        <td class="text-gray-600 fs-6 text-center">Standard GPS Tracker</td>
-                                        <td class="text-gray-600 fs-6 text-center">Basic GPS tracking model</td>
-                                        <td class="fs-6 text-center">
-                                            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
-                                                <i class="bi bi-check-circle-fill me-1"></i> Active
-                                            </span>
-                                        </td>
-                                        <td class="text-center gap-3">
-                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editModelModal">
-                                                <i class="bi bi-pencil"></i> Edit
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModelModal">
-                                                <i class="bi bi-trash"></i> Delete
-                                            </button>
-                                        </td>
+                                        <td class="text-gray-600 fs-6 text-center">{{ $loop->iteration }}</td>
+                                        <td class="text-gray-600 fs-6 text-center">{{ $tracker->device_name }}</td>
+                                        <td class="text-gray-600 fs-6 text-center">{{ $tracker->imei }}</td>
+                                        <td class="text-gray-600 fs-6 text-center">{{ $tracker->company }}</td>
                                     </tr>
+                                    @empty
+                                    <tr>
+                                        <td>No device found. Please upload.</td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- API Configurations Section -->
                 <div class="card card-flush mb-5">
                     <div class="card-header pt-2">
@@ -132,10 +128,12 @@
                                             </span>
                                         </td>
                                         <td class="text-center gap-3">
-                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#viewApiModal">
+                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal"
+                                                data-bs-target="#viewApiModal">
                                                 <i class="bi bi-eye"></i> View
                                             </button>
-                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editApiModal">
+                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal"
+                                                data-bs-target="#editApiModal">
                                                 <i class="bi bi-pencil"></i> Edit
                                             </button>
                                         </td>
@@ -145,7 +143,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Commission Configurations Section -->
                 <div class="card card-flush">
                     <div class="card-header pt-2">
@@ -177,10 +175,12 @@
                                             </span>
                                         </td>
                                         <td class="text-center gap-3">
-                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#viewCommissionModal">
+                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal"
+                                                data-bs-target="#viewCommissionModal">
                                                 <i class="bi bi-eye"></i> View
                                             </button>
-                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editCommissionModal">
+                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal"
+                                                data-bs-target="#editCommissionModal">
                                                 <i class="bi bi-pencil"></i> Edit
                                             </button>
                                         </td>
@@ -200,7 +200,8 @@
             <div class="modal-content">
                 <div class="modal-header text-white" style="background-color: #2E3192;">
                     <h5 class="modal-title" id="addModelModalLabel">Add New Tracker Model</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <form id="addModelForm">
                     <div class="modal-body row g-3">
@@ -234,7 +235,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" style="background-color: #2E3192; color: white;">Add Model</button>
+                        <button type="submit" class="btn btn-primary"
+                            style="background-color: #2E3192; color: white;">Add Model</button>
                     </div>
                 </form>
             </div>
@@ -247,7 +249,8 @@
             <div class="modal-content">
                 <div class="modal-header text-white" style="background-color: #2E3192;">
                     <h5 class="modal-title" id="editModelModalLabel">Edit Tracker Model</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <form id="editModelForm">
                     <div class="modal-body row g-3">
@@ -281,7 +284,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" style="background-color: #2E3192; color: white;">Save Changes</button>
+                        <button type="submit" class="btn btn-primary"
+                            style="background-color: #2E3192; color: white;">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -289,16 +293,20 @@
     </div>
 
     <!-- Delete Tracker Model Modal -->
-    <div class="modal fade" id="deleteModelModal" tabindex="-1" aria-labelledby="deleteModelModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModelModal" tabindex="-1" aria-labelledby="deleteModelModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="deleteModelModalLabel">Confirm Deletion</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete the tracker model <strong>Standard GPS Tracker (TRK-1001)</strong>?</p>
-                    <p class="text-danger">This action cannot be undone and will affect all devices using this model.</p>
+                    <p>Are you sure you want to delete the tracker model <strong>Standard GPS Tracker
+                            (TRK-1001)</strong>?</p>
+                    <p class="text-danger">This action cannot be undone and will affect all devices using this model.
+                    </p>
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="confirmModelDelete">
                         <label class="form-check-label" for="confirmModelDelete">
@@ -308,7 +316,8 @@
                 </div>
                 <div class="modal-footer">
                     <!--<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>-->
-                    <button type="button" class="btn btn-danger" id="confirmModelDeleteBtn" disabled>Delete Model</button>
+                    <button type="button" class="btn btn-danger" id="confirmModelDeleteBtn" disabled>Delete
+                        Model</button>
                 </div>
             </div>
         </div>
@@ -320,7 +329,8 @@
             <div class="modal-content">
                 <div class="modal-header text-white" style="background-color: #2E3192;">
                     <h5 class="modal-title" id="viewApiModalLabel">API Configuration Details</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-4">
@@ -364,7 +374,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" style="background-color: #2E3192; color: white;" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #2E3192; color: white;"
+                        data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -376,7 +387,8 @@
             <div class="modal-content">
                 <div class="modal-header text-white" style="background-color: #2E3192;">
                     <h5 class="modal-title" id="editApiModalLabel">Edit API Configuration</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <form id="editApiForm">
                     <div class="modal-body row g-3">
@@ -416,7 +428,8 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button type="submit" class="btn btn-primary" style="background-color: #2E3192; color: white;">Save Changes</button>
+                        <button type="submit" class="btn btn-primary"
+                            style="background-color: #2E3192; color: white;">Save Changes</button>
                     </div>
                 </form>
             </div>
@@ -424,12 +437,14 @@
     </div>
 
     <!-- View Commission Modal -->
-    <div class="modal fade" id="viewCommissionModal" tabindex="-1" aria-labelledby="viewCommissionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="viewCommissionModal" tabindex="-1" aria-labelledby="viewCommissionModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-white" style="background-color: #2E3192;">
                     <h5 class="modal-title" id="viewCommissionModalLabel">Commission Configuration Details</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-4">
@@ -473,19 +488,22 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" style="background-color: #2E3192; color: white;" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" style="background-color: #2E3192; color: white;"
+                        data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Edit Commission Modal -->
-    <div class="modal fade" id="editCommissionModal" tabindex="-1" aria-labelledby="editCommissionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editCommissionModal" tabindex="-1" aria-labelledby="editCommissionModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-white" style="background-color: #2E3192;">
                     <h5 class="modal-title" id="editCommissionModalLabel">Edit Commission Configuration</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <form id="editCommissionForm">
                     <div class="modal-body row g-3">
@@ -524,7 +542,8 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button type="submit" class="btn btn-primary text-white" style="background-color: #2E3192;">Save Changes</button>
+                        <button type="submit" class="btn btn-primary text-white" style="background-color: #2E3192;">Save
+                            Changes</button>
                     </div>
                 </form>
             </div>
@@ -553,37 +572,37 @@
                     }
                 }
             });
-            
+
             // Enable delete buttons only when checkbox is checked
-            $('#confirmModelDelete').change(function() {
+            $('#confirmModelDelete').change(function () {
                 $('#confirmModelDeleteBtn').prop('disabled', !$(this).is(':checked'));
             });
 
             // Form submission handlers with relevant toast messages
-            $('#addModelForm').on('submit', function(e) {
+            $('#addModelForm').on('submit', function (e) {
                 e.preventDefault();
                 $('#addModelModal').modal('hide');
                 showNotification('New tracker model added successfully!', 'success');
             });
 
-            $('#editModelForm').on('submit', function(e) {
+            $('#editModelForm').on('submit', function (e) {
                 e.preventDefault();
                 $('#editModelModal').modal('hide');
                 showNotification('Tracker model updated successfully!', 'success');
             });
 
-            $('#confirmModelDeleteBtn').on('click', function() {
+            $('#confirmModelDeleteBtn').on('click', function () {
                 $('#deleteModelModal').modal('hide');
                 showNotification('Tracker model has been deleted.', 'danger');
             });
 
-            $('#editApiForm').on('submit', function(e) {
+            $('#editApiForm').on('submit', function (e) {
                 e.preventDefault();
                 $('#editApiModal').modal('hide');
                 showNotification('API configuration updated successfully!', 'success');
             });
 
-            $('#editCommissionForm').on('submit', function(e) {
+            $('#editCommissionForm').on('submit', function (e) {
                 e.preventDefault();
                 $('#editCommissionModal').modal('hide');
                 showNotification('Commission configuration updated successfully!', 'success');
@@ -592,7 +611,7 @@
             // Toast notification function
             function showNotification(message, type) {
                 const toastContainer = document.getElementById('toast-container');
-                
+
                 const toast = document.createElement('div');
                 toast.className = `toast show align-items-center custom-toast toast-${type} bg-light border-0`;
                 toast.setAttribute('role', 'alert');
@@ -644,5 +663,25 @@
             }
         });
     </script>
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <form action="{{ route('dash.upload.excel') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Upload Excel</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="file" name="file" class="form-control" required>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary text-white">Import</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 </body>
+
 </html>

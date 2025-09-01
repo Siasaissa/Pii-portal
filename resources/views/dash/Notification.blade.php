@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
 
-                                    <a href="{{ url('dash/index') }}">
+                                    <a href="{{ auth()->user()->role === 'admin' ? route('dash.index') : route('dash.dashboard') }}">
                                         <button class="btn btn-sm btn-outline-light rounded-pill px-3">
                                             <i class="bi bi-house me-1"></i> Dashboard
                                         </button>

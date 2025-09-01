@@ -114,7 +114,7 @@
     // Lockout Countdown Logic
     // ============================
     @if(session('lockout_until'))
-        const lockoutEndTimestamp = {{ session('lockout_until') }} * 1000; // milliseconds
+        const lockoutEndTimestamp = {{ session('lockout_until') }} * 1000;
         const now = new Date().getTime();
         let secondsLeft = Math.floor((lockoutEndTimestamp - now) / 1000);
 
@@ -140,7 +140,7 @@
                 }
             };
 
-            updateCountdown(); // run immediately
+            updateCountdown();
             const timer = setInterval(updateCountdown, 1000);
         }
     @endif
@@ -149,18 +149,18 @@
     // Loader + Redirect Logic
     // ============================
     @if (session('success') && str_contains(session('success'), 'Redirecting'))
-        // After 1.5s hide form and show loader
         setTimeout(() => {
             document.getElementById('loginForm').classList.add('d-none');
             document.getElementById('loader').classList.remove('d-none');
         }, 1500);
 
-        // After another 2s, redirect to dashboard
+        // 👇 Role-aware redirect
         setTimeout(() => {
-            window.location.href = '/dash/index';
+            window.location.href = "{{ session('redirect_to') }}";
         }, 3500);
     @endif
 </script>
+
 
     
 

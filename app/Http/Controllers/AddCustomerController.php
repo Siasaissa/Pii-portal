@@ -21,71 +21,88 @@ class AddCustomerController extends Controller
 
     // Handle form submission for registration
     public function addCustomer(Request $request)
-    {
-        // Validate the incoming request
-        $validated = $request->validate([
-            'name'     => 'required|string|max:255',
-            'phone'    => 'required|string|max:20|unique:customers,phone',
-            'email'    => 'required|string|email|max:255|unique:customers,email',
-            'id_type'  => 'required|string|max:50|in:NIDA,Passport,Driving License,Voter ID',
-            'id_no'    => 'required|string|max:50',
-            'dob'      => 'required|date',
-            'gender'   => 'required|string|in:Male,Female',
-            'status'   => 'required|string|in:Active,Pending,Inactive',
-        ]);
+{
+    // Validate the incoming request
+    $validated = $request->validate([
+        'name'     => 'required|string|max:255',
+        'phone'    => 'required|string|max:20|unique:customers,phone',
+        'email'    => 'required|string|email|max:255|unique:customers,email',
+        'id_type'  => 'required|string|max:50|in:NIDA,Passport,Driving License,Voter ID',
+        'id_no'    => 'required|string|max:50',
+        'dob'      => 'required|date',
+        'gender'   => 'required|string|in:Male,Female',
+        'status'   => 'required|string|in:Active,Pending,Inactive',
+    ]);
 
-        // Generate a default password
-        $password = 'Pass' . rand(1000, 9999);
+    // Generate a default password
+    $password = 'Pass' . rand(1000, 9999);
 
-        // Create the customer
-        $user = Customers::create([
-            'name'     => $validated['name'],
-            'phone'    => $validated['phone'],
-            'email'    => $validated['email'],
-            'id_type'  => $validated['id_type'],
-            'id_no'    => $validated['id_no'],
-            'dob'      => $validated['dob'],
-            'gender'   => $validated['gender'],
-            'status'   => $validated['status'],
-            'password' => Hash::make($password),
-        ]);
+    // Create the customer
+    $user = Customers::create([
+        'user_id'  => auth()->id(), // assign the logged-in user or null if you want
+        'name'     => $validated['name'],
+        'phone'    => $validated['phone'],
+        'email'    => $validated['email'],
+        'id_type'  => $validated['id_type'],
+        'id_no'    => $validated['id_no'],
+        'dob'      => $validated['dob'],
+        'gender'   => $validated['gender'],
+        'status'   => $validated['status'],
+        'password' => Hash::make($password),
+    ]);
 
-        // Create a password reset token
-        $token = Password::createToken($user);
+    // Create a password reset token
+    $token = Password::createToken($user);
 
-        // Build the password reset URL
-        $resetUrl = url(route('password.reset', [
-            'token' => $token,
-            'email' => $user->email
-        ], false));
+    // Build the password reset URL
+    $resetUrl = url(route('password.reset', [
+        'token' => $token,
+        'email' => $user->email
+    ], false));
 
-        // Send welcome email with password reset link
-        try {
-            Mail::to($user->email)->send(new WelcomeMail($user->name, $password, $resetUrl));
-        } catch (\Exception $e) {
-            Log::error('Email sending failed: ' . $e->getMessage());
-        }
-
-        // Redirect back with success message
-        return redirect()->route('dash.Customers')
-            ->with('success', 'New customer added successfully!');
+    // Send welcome email with password reset link
+    try {
+        Mail::to($user->email)->send(new WelcomeMail($user->name, $password, $resetUrl));
+    } catch (\Exception $e) {
+        Log::error('Email sending failed: ' . $e->getMessage());
     }
+
+    return redirect()->route('dash.Customers')
+        ->with('success', 'New customer added successfully!');
+}
+
 
 
 public function showCustomer()
 {
-    $customers = Customers::latest()->get();
+    $user = auth()->user();
+
+    if ($user->role === 'admin') {
+        // Admin sees all customers
+        $customers = Customers::latest()->get();
+    } else {
+        // Regular user sees only their own customers
+        $customers = Customers::where('user_id', $user->id)
+                              ->latest()
+                              ->get();
+    }
+
+    // Total customers count
     $totalCustomers = $customers->count();
 
-    $activeCount = Customers::where('status', 'Active')->count();
+    // Active customers count
+    $activeCount = $customers->where('status', 'active')->count();
 
+    // New customers this month
     $now = Carbon::now();
-    $newCount = Customers::whereYear('created_at', $now->year)
-    ->whereMonth('created_at', $now->month)
-    ->count();
+    $newCount = $customers->filter(function ($customer) use ($now) {
+        return $customer->created_at->year == $now->year &&
+               $customer->created_at->month == $now->month;
+    })->count();
 
-    return view('dash.Customers', compact('customers', 'totalCustomers', 'activeCount','newCount'));
+    return view('dash.Customers', compact('customers', 'totalCustomers', 'activeCount', 'newCount'));
 }
+
 
 
 

@@ -9,13 +9,19 @@ use App\Models\Service;
 
 class DashboardController extends Controller
 {
-    public function index()
+public function index(Request $request)
 {
     $vehicles = Vehicle::all();
-    $totalVehicle= Vehicle::count();
+    $total = Vehicle::count();
 
-    return view('dash.index', compact('vehicles','total'));
+    // detect which route was used
+    if ($request->routeIs('dash.dashboard')) {
+        return view('dash.dashboard', compact('vehicles', 'total'));
+    }
+
+    return view('dash.index', compact('vehicles', 'total'));
 }
+
 
 public function totalCustomers()
 {

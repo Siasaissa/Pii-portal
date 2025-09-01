@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Customers;
+
 
 class UserController extends Controller
 {
@@ -65,7 +67,6 @@ public function login(Request $request)
     $attempts = session()->get('login_attempts', 0);
     $lockoutUntil = session()->get('lockout_until', null);
 
-    // If user is locked out
     if ($lockoutUntil && now()->lt($lockoutUntil)) {
         $secondsLeft = now()->diffInSeconds($lockoutUntil);
         return back()
@@ -79,34 +80,42 @@ public function login(Request $request)
         'password' => 'required|string',
     ]);
 
-    // Check if user exists
+    // Find the user
     $user = User::where('email', $credentials['email'])->first();
 
     if (!$user) {
         return back()->withErrors(['email' => 'No account found with this email.']);
     }
 
-    // Check if user is active
     if ($user->status !== 'active') {
         return back()->withErrors(['email' => 'Your account is inactive. Please contact admin.']);
     }
 
-    // If login is successful
+    // Attempt login
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
-
-        // Reset lockout data
         session()->forget(['login_attempts', 'lockout_until']);
 
-        return redirect('login.form')
-            ->with('success', 'Login successful! Redirecting to dashboard...');
+        $user = Auth::user();
+
+        // 👇 Redirect to role-specific dashboard and pass user details
+        if ($user->role === 'admin') {
+            return redirect()->route('dash.index')->with([
+                'success' => 'Welcome Admin!',
+                'user'    => $user
+            ]);
+        } else {
+            return redirect()->route('dash.dashboard')->with([
+                'success' => 'Welcome User!',
+                'user'    => $user
+            ]);
+        }
     }
 
-    // Increment failed attempts
+    // Increment attempts
     $attempts++;
     session()->put('login_attempts', $attempts);
 
-    // If reached max attempts
     if ($attempts >= $maxAttempts) {
         $lockoutUntil = now()->addSeconds($lockoutTime);
         session()->put('lockout_until', $lockoutUntil);
@@ -116,9 +125,9 @@ public function login(Request $request)
             ->with('lockout_until', $lockoutUntil->timestamp);
     }
 
-    // Wrong password, still have attempts
-    return back()
-        ->withErrors(['email' => "Invalid login. Attempts left: " . ($maxAttempts - $attempts)]);
+    return back()->withErrors([
+        'email' => "Invalid login. Attempts left: " . ($maxAttempts - $attempts)
+    ]);
 }
 
 
@@ -132,4 +141,58 @@ public function login(Request $request)
 
         return redirect('authentication/login')->with('success', 'You have been logged out.');
     }
+
+public function logoutC(Request $request)
+{
+    // Log out the user
+    Auth::guard('web')->logout(); // or the guard you are using
+
+    // Invalidate the session
+    $request->session()->invalidate();
+
+    // Regenerate CSRF token to prevent session fixation
+    $request->session()->regenerateToken();
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Logged out successfully'
+    ]);
+}
+
+
+
+
+
+
+public function apiLogin(Request $request)
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string',
+    ]);
+
+    $customer = Customers::where('email', $credentials['email'])->first();
+
+    if ($customer && Hash::check($credentials['password'], $customer->password)) {
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Login successful',
+            'customer' => [
+                'id' => $customer->id,
+                'name' => $customer->name,
+                'email' => $customer->email,
+            ],
+        ]);
+    }
+
+    return response()->json([
+        'status' => 'error',
+        'message' => 'Invalid credentials'
+    ], 401);
+}
+
+
+
+
+
 }

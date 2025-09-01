@@ -103,26 +103,19 @@
                                         <a href="#" style="text-decoration: none; color: inherit;">
                                             <span>Support</span></a>
                                     </div>
-                                        <form method="POST" action="{{ route('logout') }}">
-                                            @csrf
-                                            <button type="submit"
-                                                style="border: none; background: none; color: inherit; font-weight: bold; cursor: pointer;">
-                                                Logout
-                                            </button>
-                                        </form>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit"
+                                            style="border: none; background: none; color: inherit; font-weight: bold; cursor: pointer;">
+                                            Logout
+                                        </button>
+                                    </form>
                                     <div class="d-flex fw-bold text-primary ms-4 menu-link"
                                         style="color: red !important;">
-                                        <a href="#" style="text-decoration: none; color: #F9A61A;"><span>Welcome Back Admin|
+                                        <a href="#" style="text-decoration: none; color: #F9A61A;"><span>Welcome Back |
                                                 {{ Auth::user()->name }}</span></a>
                                     </div>
-                                    <!--
-                                    <div class="d-flex fw-bold text-primary ms-4 menu-link">
-                                        <a href="../index.html">
-                                        <button class="btn btn-primary btn-sm">Logout</button>
-                                        </a>
-
-                                    </div>
-                                    -->
+                                    
                                 </div>
                                 <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
@@ -131,35 +124,36 @@
                                     <!-- Begin: User Initials as Avatar -->
                                     <!-- Your initials div with popover attributes -->
                                     <div class="symbol-label  text-white fw-bold fs-4 d-flex align-items-center justify-content-center rounded-circle"
-                                        style="width: 50px; height: 50px; cursor: pointer; background-color: #F9A61A;" data-bs-toggle="popover"
-                                        data-bs-trigger="hover" data-bs-placement="right" data-bs-html="true"
-                                        data-bs-content='
+                                        style="width: 50px; height: 50px; cursor: pointer; background-color: #F9A61A;"
+                                        data-bs-toggle="popover" data-bs-trigger="hover" data-bs-placement="right"
+                                        data-bs-html="true" data-bs-content='
                                         <div class="popover-profile">
                                             <div class="d-flex align-items-center mb-2">
 
                                                 <div>
-                                                    <h6 class="mb-0">Ahmad Siasa</h6>
-                                                    <small class="text-muted">Software Developer</small>
+                                                    <h6 class="mb-0">{{ Auth::user()->name }}</h6>
+                                                    <small class="text-muted">{{ Auth::user()->role }}</small>
                                                 </div>
                                             </div>
-                                            <div class="row g-2">
-                                                <div class="col-6"><small><strong>Email:</strong><br>ahmed@humtech.co.tz</small></div>
-                                                <div class="col-6"><small><strong>Phone:</strong><br>0613 803662-</small></div>
-                                                <div class="col-6"><small><strong>Department:</strong><br>Development</small></div>
-                                                <div class="col-6"><small><strong>Joined:</strong><br>Jan 2020</small></div>
+                                            <div class="d-flex align-items-center mb-2">
+
+                                                <div>
+                                                    <h6 class="mb-0">{{ Auth::user()->email }}</h6>
+                                                    <small class="text-muted">{{ Auth::user()->created_at }}</small>
+                                                </div>
                                             </div>
                                         </div>
                                     '>
-                                        AS
+                                        <i class="bi bi-person fs-1 text-white"></i>
                                     </div>
 
                                     <!-- Optional: Status dot -->
-                                    <div
-                                        class="position-absolute translate-middle bottom-0 start-100 ms-n1 mb-7 rounded-circle h-10px w-10px" style="background-color: #F9A61A;">
+                                    <div class="position-absolute translate-middle bottom-0 start-100 ms-n1 mb-7 rounded-circle h-10px w-10px"
+                                        style="background-color: #F9A61A;">
                                     </div>
                                 </div>
 
-                                
+
                                 <!--begin::User account menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
                                     data-kt-menu="true">
@@ -322,7 +316,8 @@
 
                                     <!--begin::New Campaign Button-->
                                     <a href="#" class="btn btn-icon   h-55px w-55px" data-bs-toggle="modal"
-                                        data-bs-target="#dashmodal" title="New product" style="background-color: #F9A61A;">
+                                        data-bs-target="#dashmodal" title="New product"
+                                        style="background-color: #F9A61A;">
                                         <i class="fas fa-plus fs-2 text-white"></i>
                                     </a>
                                     <!--end::New Campaign Button-->
@@ -487,9 +482,10 @@
                                                                     class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
                                                                     <div
                                                                         class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i
-                                                                                class="bi bi-house fs-1 fw-bold" style="color: #F9A61A !important; "></i>
+                                                                        <span
+                                                                            class="symbol-label bg-light-danger rounded-3">
+                                                                            <i class="bi bi-house fs-1 fw-bold"
+                                                                                style="color: #F9A61A !important; "></i>
                                                                         </span>
                                                                     </div>
                                                                     <div class="text-center">
@@ -507,9 +503,10 @@
                                                                     class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
                                                                     <div
                                                                         class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i
-                                                                                class="bi bi-person-plus fs-1 fw-bold" style="color: #F9A61A !important; "></i>
+                                                                        <span
+                                                                            class="symbol-label bg-light-danger rounded-3">
+                                                                            <i class="bi bi-person-plus fs-1 fw-bold"
+                                                                                style="color: #F9A61A !important; "></i>
                                                                         </span>
                                                                     </div>
                                                                     <div class="text-center">
@@ -527,9 +524,10 @@
                                                                     class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
                                                                     <div
                                                                         class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i
-                                                                                class="bi bi-clipboard2-pulse fs-1 " style="color: #F9A61A !important; "></i>
+                                                                        <span
+                                                                            class="symbol-label bg-light-danger rounded-3">
+                                                                            <i class="bi bi-clipboard2-pulse fs-1 "
+                                                                                style="color: #F9A61A !important; "></i>
                                                                         </span>
                                                                     </div>
                                                                     <div class="text-center">
@@ -540,62 +538,11 @@
                                                             </a>
                                                         </div>
 
-                                                        <div class="col-4 d-flex justify-content-center">
-                                                            <a href="{{ route('dash.tarriff.index') }}"
-                                                                class="d-block w-100 text-decoration-none">
-                                                                <div
-                                                                    class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
-                                                                    <div
-                                                                        class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i class="bi bi-wallet2 fs-1" style="color: #F9A61A !important; "></i>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="text-center">
-                                                                        <span
-                                                                            class="text-gray-700 fw-bolder d-block fs-9 text-nowrap">Tariff</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
 
-                                                        <div class="col-4 d-flex justify-content-center">
-                                                            <a href="{{route('dash.Transaction')}}"
-                                                                class="d-block w-100 text-decoration-none">
-                                                                <div
-                                                                    class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
-                                                                    <div
-                                                                        class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i class="bi bi-briefcase fs-1" style="color: #F9A61A !important; "></i>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="text-center">
-                                                                        <span
-                                                                            class="text-gray-700 fw-bolder d-block fs-9 text-nowrap">Transaction</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
 
-                                                        <div class="col-4 d-flex justify-content-center">
-                                                            <a href="{{route('dash.Services')}}"
-                                                                class="d-block w-100 text-decoration-none">
-                                                                <div
-                                                                    class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
-                                                                    <div
-                                                                        class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i class="bi bi-gear fs-1" style="color: #F9A61A !important; "></i>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="text-center">
-                                                                        <span
-                                                                            class="text-gray-700 fw-bolder d-block fs-9 text-nowrap">services</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
+
+
+
 
                                                         <div class="col-4 d-flex justify-content-center">
                                                             <a href="{{route('dash.Report')}}"
@@ -604,8 +551,10 @@
                                                                     class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
                                                                     <div
                                                                         class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i class="bi bi-file-earmark-medical fs-1" style="color: #F9A61A !important; "></i>
+                                                                        <span
+                                                                            class="symbol-label bg-light-danger rounded-3">
+                                                                            <i class="bi bi-file-earmark-medical fs-1"
+                                                                                style="color: #F9A61A !important; "></i>
                                                                         </span>
                                                                     </div>
                                                                     <div class="text-center">
@@ -616,85 +565,40 @@
                                                             </a>
                                                         </div>
 
+
+
+
+
+
                                                         <div class="col-4 d-flex justify-content-center">
-                                                            <a href="{{route('dash.Setting')}}"
+                                                            <a href="{{route('dash.Notification')}}"
                                                                 class="d-block w-100 text-decoration-none">
                                                                 <div
-                                                                    class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
+                                                                    class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100 position-relative">
                                                                     <div
-                                                                        class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i class="bi bi-gear-wide-connected fs-1" style="color: #F9A61A !important; "></i>
+                                                                        class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center position-relative">
+                                                                        <span
+                                                                            class="symbol-label position-relative bg-light-danger rounded-3">
+                                                                            <i class="bi bi-bell fs-1 "
+                                                                                style="color: #F9A61A;"></i>
+                                                                            <!-- Notification badge -->
+                                                                            <span
+                                                                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-white">
+                                                                                3
+                                                                                <span class="visually-hidden">unread
+                                                                                    messages</span>
+                                                                            </span>
                                                                         </span>
                                                                     </div>
                                                                     <div class="text-center">
                                                                         <span
-                                                                            class="text-gray-700 fw-bolder d-block fs-9 text-nowrap text-center">Settings</span>
+                                                                            class="text-gray-700 fw-bolder d-block fs-9 text-nowrap">Notifications</span>
                                                                     </div>
                                                                 </div>
                                                             </a>
                                                         </div>
 
 
-                                                        <div class="col-4 d-flex justify-content-center">
-                                                            <a href="{{ route('dash.Messages.index') }}"
-                                                                class="d-block w-100 text-decoration-none">
-                                                                <div
-                                                                    class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
-                                                                    <div
-                                                                        class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i
-                                                                                class="bi bi-chat-left-text fs-1 " style="color: #F9A61A !important; "></i>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="text-center">
-                                                                        <span
-                                                                            class="text-gray-700 fw-bolder d-block fs-9 text-nowrap">Messages</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-
-                                                        <div class="col-4 d-flex justify-content-center">
-                                                            <a href="{{route('dash.Notification')}}" class="d-block w-100 text-decoration-none">
-                                                                <div class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100 position-relative">
-                                                                <div class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center position-relative">
-                                                                    <span class="symbol-label position-relative bg-light-danger rounded-3">
-                                                                    <i class="bi bi-bell fs-1 " style="color: #F9A61A;"></i>
-                                                                    <!-- Notification badge -->
-                                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-white">
-                                                                        3
-                                                                        <span class="visually-hidden">unread messages</span>
-                                                                    </span>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="text-center">
-                                                                    <span class="text-gray-700 fw-bolder d-block fs-9 text-nowrap">Notifications</span>
-                                                                </div>
-                                                                </div>
-                                                            </a>
-                                                            </div>
-
-                                                        <div class="col-4 d-flex justify-content-center">
-                                                            <a href="{{route('dash.User')}}"
-                                                                class="d-block w-100 text-decoration-none">
-                                                                <div
-                                                                    class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
-                                                                    <div
-                                                                        class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i
-                                                                                class="bi bi-people  fs-1 " style="color: #F9A61A !important; "></i>
-                                                                        </span>
-                                                                    </div>
-                                                                    <div class="text-center">
-                                                                        <span
-                                                                            class="text-gray-700 fw-bolder d-block fs-9 text-nowrap">Users</span>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
 
                                                         <div class="col-4 d-flex justify-content-center">
                                                             <a href="{{ route('dash.Quotation') }}"
@@ -703,9 +607,10 @@
                                                                     class="bg-gray-100 bg-opacity-70 rounded-2 px-6 py-5 shadow-lg mt-3 w-100 h-100">
                                                                     <div
                                                                         class="symbol symbol-30px mb-4 d-flex justify-content-center align-items-center">
-                                                                        <span class="symbol-label bg-light-danger rounded-3">
-                                                                            <i
-                                                                                class="bi bi-archive fs-1" style="color: #F9A61A !important; "></i>
+                                                                        <span
+                                                                            class="symbol-label bg-light-danger rounded-3">
+                                                                            <i class="bi bi-archive fs-1"
+                                                                                style="color: #F9A61A !important; "></i>
                                                                         </span>
                                                                     </div>
                                                                     <div class="text-center">
@@ -716,7 +621,7 @@
                                                             </a>
                                                         </div>
 
-                                                        
+
                                                     </div>
 
                                                     <!--end::Row-->
@@ -794,14 +699,16 @@
                                                                                 <span class="path2"></span>
                                                                             </i>
                                                                             <!-- Glow effect -->
-                                                                            <span class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse" style="background-color: #F9A61A; opacity: 0.5;"></span>
-                                                                                
+                                                                            <span
+                                                                                class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse"
+                                                                                style="background-color: #F9A61A; opacity: 0.5;"></span>
+
                                                                         </span>
                                                                     </div>
 
                                                                     <div class="m-0">
-                                                                        <h4
-                                                                            class="fw-bold  mb-3 animate__animated animate__fadeInRight" style="color: #2E3192;">
+                                                                        <h4 class="fw-bold  mb-3 animate__animated animate__fadeInRight"
+                                                                            style="color: #2E3192;">
                                                                             Total Services
                                                                         </h4>
 
@@ -810,13 +717,14 @@
                                                                                 class="d-flex flex-column flex-shrink-0 me-4">
                                                                                 <div class="d-flex align-items-center fs-10 fw-bold text-gray-500 mb-2 animate__animated animate__fadeInUp"
                                                                                     style="animation-delay: 0.1s">
-                                                                                    <i class=" fs-6  me-2" style="color: #2E3192;">
+                                                                                    <i class=" fs-6  me-2"
+                                                                                        style="color: #2E3192;">
                                                                                         <span class="path1"></span>
                                                                                         <span class="path2"></span>
                                                                                         <span class="path3"></span>
                                                                                     </i>
-                                                                                    <span
-                                                                                        class="fs-1  ms-1" style="color: #2E3192;">{{ $totalService }}</span>
+                                                                                    <span class="fs-1  ms-1"
+                                                                                        style="color: #2E3192;">12</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -844,14 +752,16 @@
                                                                                 <span class="path2"></span>
                                                                             </i>
                                                                             <!-- Glow effect -->
-                                                                        
-                                                                                <span class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse" style="background-color: #F9A61A; opacity: 0.5;"></span>
+
+                                                                            <span
+                                                                                class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse"
+                                                                                style="background-color: #F9A61A; opacity: 0.5;"></span>
                                                                         </span>
                                                                     </div>
 
                                                                     <div class="m-0">
-                                                                        <h4
-                                                                            class="fw-bold  mb-3 animate__animated animate__fadeInRight" style="color: #2E3192;">
+                                                                        <h4 class="fw-bold  mb-3 animate__animated animate__fadeInRight"
+                                                                            style="color: #2E3192;">
                                                                             Total Renewals
                                                                         </h4>
 
@@ -861,8 +771,8 @@
                                                                                 <div class="d-flex align-items-center fs-7 fw-bold text-gray-500 mb-2 animate__animated animate__fadeInUp"
                                                                                     style="animation-delay: 0.1s">
 
-                                                                                    <span
-                                                                                        class="fs-2  ms-1" style="color: #2E3192;">101</span>
+                                                                                    <span class="fs-2  ms-1"
+                                                                                        style="color: #2E3192;">101</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -891,13 +801,15 @@
                                                                                 <span class="path2"></span>
                                                                             </i>
                                                                             <!-- Glow effect -->
-                                                                            <span class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse" style="background-color: #F9A61A; opacity: 0.5;"></span>
+                                                                            <span
+                                                                                class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse"
+                                                                                style="background-color: #F9A61A; opacity: 0.5;"></span>
                                                                         </span>
                                                                     </div>
 
                                                                     <div class="m-0">
-                                                                        <h4
-                                                                            class="fw-bold mb-3 animate__animated animate__fadeInRight" style="color: #2E3192 ;">
+                                                                        <h4 class="fw-bold mb-3 animate__animated animate__fadeInRight"
+                                                                            style="color: #2E3192 ;">
                                                                             Total Customers
                                                                         </h4>
 
@@ -907,8 +819,8 @@
                                                                                 <div class="d-flex align-items-center fs-7 fw-bold text-gray-500 mb-2 animate__animated animate__fadeInUp"
                                                                                     style="animation-delay: 0.1s">
 
-                                                                                    <span
-                                                                                        class="fs-2 ms-1" style="color: #2E3192;">{{ $totalCustomer }}</span>
+                                                                                    <span class="fs-2 ms-1"
+                                                                                        style="color: #2E3192;">100</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -995,13 +907,15 @@
                                                                                 <span class="path2"></span>
                                                                             </i>
                                                                             <!-- Glow effect -->
-                                                                            <span class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse" style="background-color: #F9A61A; opacity: 0.5;"></span>
+                                                                            <span
+                                                                                class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse"
+                                                                                style="background-color: #F9A61A; opacity: 0.5;"></span>
                                                                         </span>
                                                                     </div>
                                                                     <div class="m-0">
                                                                         <!--begin::Subtitle-->
-                                                                        <h4
-                                                                            class="fw-bold mb-3 animate__animated animate__fadeInRight" style="color: #2E3192;">
+                                                                        <h4 class="fw-bold mb-3 animate__animated animate__fadeInRight"
+                                                                            style="color: #2E3192;">
                                                                             Total Transaction</h4> <!--end::Subtitle-->
                                                                         <!--begin::Items-->
                                                                         <div class="d-flex d-grid gap-5">
@@ -1014,8 +928,8 @@
                                                                                     <div class="status-indicator me-2">
 
                                                                                     </div>
-                                                                                    <span
-                                                                                        class="fs-2 ms-1" style="color: #2E3192;">10,000.00</span>
+                                                                                    <span class="fs-2 ms-1"
+                                                                                        style="color: #2E3192;">10,000.00</span>
                                                                                 </div>
 
                                                                                 <!-- Request date with calendar icon -->
@@ -1058,15 +972,17 @@
                                                                                 <span class="path2"></span>
                                                                             </i>
                                                                             <!-- Glow effect -->
-                                                                            <span class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse" style="background-color: #F9A61A; opacity: 0.5;"></span>
+                                                                            <span
+                                                                                class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse"
+                                                                                style="background-color: #F9A61A; opacity: 0.5;"></span>
                                                                         </span>
                                                                     </div>
                                                                     <!--end::Symbol-->
 
                                                                     <!--begin::Info-->
                                                                     <div class="m-0">
-                                                                        <h4
-                                                                            class="fw-bold  mb-3 animate__animated animate__fadeInRight" style="color: #2E3192;">
+                                                                        <h4 class="fw-bold  mb-3 animate__animated animate__fadeInRight"
+                                                                            style="color: #2E3192;">
                                                                             Successfully Transaction</h4>
                                                                         <div class="d-flex d-grid gap-5">
                                                                             <!--begin::Item-->
@@ -1078,8 +994,8 @@
                                                                                     <div class="status-indicator me-2">
 
                                                                                     </div>
-                                                                                    <span
-                                                                                        class="fs-2  ms-1" style="color: #2E3192;">10,000.00</span>
+                                                                                    <span class="fs-2  ms-1"
+                                                                                        style="color: #2E3192;">10,000.00</span>
                                                                                 </div>
 
                                                                                 <!-- Request date with calendar icon -->
@@ -1122,7 +1038,9 @@
                                                                                 <span class="path2"></span>
                                                                             </i>
                                                                             <!-- Glow effect -->
-                                                                            <span class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse" style="background-color: #F9A61A; opacity: 0.5;"></span>
+                                                                            <span
+                                                                                class="position-absolute top-0 start-0 w-100 h-100 rounded-circle  animate-pulse"
+                                                                                style="background-color: #F9A61A; opacity: 0.5;"></span>
                                                                         </span>
                                                                     </div>
                                                                     <!--end::Symbol-->
@@ -1130,8 +1048,8 @@
                                                                     <!--begin::Info-->
                                                                     <div class="m-0">
                                                                         <!--begin::Subtitle-->
-                                                                        <h4
-                                                                            class="fw-bold mb-3 animate__animated animate__fadeInRight" style="color: #2E3192;">
+                                                                        <h4 class="fw-bold mb-3 animate__animated animate__fadeInRight"
+                                                                            style="color: #2E3192;">
                                                                             Commission</h4> <!--end::Subtitle-->
 
                                                                         <!--begin::Items-->
@@ -1145,8 +1063,8 @@
                                                                                     <div class="status-indicator me-2">
 
                                                                                     </div>
-                                                                                    <span
-                                                                                        class="fs-2 ms-1" style="color: #2E3192;">100,000.00</span>
+                                                                                    <span class="fs-2 ms-1"
+                                                                                        style="color: #2E3192;">100,000.00</span>
                                                                                 </div>
 
                                                                                 <!-- Request date with calendar icon -->
@@ -1196,76 +1114,7 @@
                                         <!--end::Row-->
 
                                         <!--begin::Engage widget 4-->
-                                        <div class="card border-transparent " data-bs-theme="light"
-                                            style="background-color: #ffffff;">
-                                            <!--begin::Body-->
-                                            <div class="card card-flush h-xl-100">
-                                                <!--begin::Header-->
-                                                <div class="card-header pt-7">
-                                                    <!--begin::Title-->
-                                                    <h3 class="card-title align-items-start flex-column">
-                                                        <span
-                                                            class="card-label fw-bold text-gray-800 d-flex align-items-center">
-                                                            Transaction Trends
-                                                            <span class="dropdown ms-2">
-                                                                <a href="#"
-                                                                    class="btn btn-sm btn-icon btn-light-warning"
-                                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                                    <i class="fas fa-chevron-down fs-8"></i>
-                                                                </a>
-                                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                                    <li><a class="dropdown-item" href="#">Today's
-                                                                            Transaction</a></li>
-                                                                    <li><a class="dropdown-item" href="#">Last 7
-                                                                            Days</a></li>
-                                                                    <li><a class="dropdown-item" href="#">This Month</a>
-                                                                    </li>
 
-                                                                </ul>
-                                                            </span>
-                                                        </span>
-                                                        <span class="text-gray-500 mt-1 fw-semibold fs-6">Real-time
-                                                            Transaction analytics</span>
-                                                    </h3>
-                                                    <!--end::Title-->
-
-                                                    <!--begin::Toolbar-->
-                                                    <div class="card-toolbar">
-                                                        <!--begin::Daterangepicker(defined in src/js/layout/app.js)-->
-                                                        <div data-kt-daterangepicker="true"
-                                                            data-kt-daterangepicker-opens="left"
-                                                            class="btn btn-sm btn-light d-flex align-items-center px-4">
-                                                            <!--begin::Display range-->
-                                                            <div class="text-gray-600 fw-bold">
-                                                                Loading date range...
-                                                            </div>
-                                                            <!--end::Display range-->
-
-                                                            <i class="bi bi-calendar text-gray-500 lh-0 fs-2 ms-2 me-0"><span
-                                                                    class="path1"></span><span
-                                                                    class="path2"></span><span
-                                                                    class="path3"></span><span
-                                                                    class="path4"></span><span
-                                                                    class="path5"></span><span class="path6"></span></i>
-                                                        </div>
-                                                        <!--end::Daterangepicker-->
-                                                    </div>
-                                                    <!--end::Toolbar-->
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Body-->
-                                                <div class="card">
-                                                    <div class="card-body d-flex align-items-end px-0 pt-3 pb-5">
-                                                        <!-- Chart Container -->
-                                                        <div id="kt_charts_widget_18_chart"
-                                                            class="w-100 min-h-auto ps-4 pe-6"
-                                                            style="min-height: 1000px; color: #2E3192;"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--end::Body-->
-                                        </div>
                                         <div class="card mt-5">
                                             <div class="card-body text-center">
                                                 <i class="fs-2">"Your Peace of Mind, Our Priority"</i>
@@ -1278,265 +1127,71 @@
 
 
                                 <!--begin::Row-->
-                                <div class="row g-5 g-xl-10">
-                                    <!--begin::Col-->
-                                    <div class="col-xl-4">
 
-                                        <!--begin::List widget 21-->
-                                        <div class="card card-flush h-xl-100">
-                                            <!--begin::Header-->
-                                            <div class="card-header border-0 pt-5">
-                                                <h3 class="card-title align-items-start flex-column">
-                                                    <span class="card-label fw-bold text-gray-900">Top Customers</span>
-
-                                                    <span class="text-muted mt-1 fw-semibold fs-7">with Achieved high
-                                                        Amount of Transaction</span>
-                                                </h3>
-
-                                                <!--begin::Toolbar-->
-                                                <div class="card-toolbar">
-                                                    <a href="#" class="btn btn-sm btn-light">All Customers</a>
-                                                </div>
-                                                <!--end::Toolbar-->
-                                            </div>
-                                            <!--end::Header-->
-
-                                            <!--begin::Body-->
-                                            <div class="card-body pt-5">
-
-                                                <!--begin::Item-->
-                                                @foreach ($customers as $customer )
-                                                <div class="d-flex flex-stack">
-                                                    <!--begin::Wrapper-->
-                                                    <div class="d-flex align-items-center me-3">
-                                                        <!--begin::Logo-->
-                                                        <!-- <img src="../assets/media/svg/brand-logos/laravel-2.svg" class="me-4 w-30px" alt="" /> -->
-                                                        <!--end::Logo-->
-
-                                                        <!--begin::Section-->
-                                                        <div class="flex-grow-1">
-                                                            <!--begin::Text-->
-                                                            <a href="#"
-                                                                class="text-gray-800 text-hover-primary fs-5 fw-bold lh-0">{{ $customer->name }}</a>
-
-                                                            <span
-                                                                class="text-gray-500 fw-semibold d-block fs-6">1,030,000
-                                                            </span>
-                                                            <!--end::Description--->
-                                                        </div>
-                                                        <!--end::Section-->
-                                                    </div>
-                                                    <!--end::Wrapper-->
-
-                                                    <!--begin::Statistics-->
-                                                    <div class="d-flex align-items-center w-100 mw-125px">
-                                                        <!--begin::Progress-->
-                                                        <div class="progress h-6px w-100 me-2 bg-light-success">
-                                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                                style="width: 65%" aria-valuenow="65" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                        <!--end::Progress-->
-
-                                                        <!--begin::Value-->
-                                                        <span class="text-gray-500 fw-semibold">
-                                                            90%
-                                                        </span>
-                                                        <!--end::Value-->
-                                                    </div>
-                                                    <!--end::Statistics-->
-                                                </div>
-                                                <!--end::Item-->
-
-                                                <!--begin::Separator-->
-                                                <div class="separator separator-dashed my-3"></div>
-                                                 @endforeach
-                                                
-                                                
-
-
-
-                                            </div>
-                                            <!--end::Body-->
-                                        </div>
-                                        <!--end::List widget 21-->
-                                    </div>
-                                    <!--end::Col-->
-
-                                    <!--begin::Col-->
-                                    <div class="col-xl-8">
-                                        <!--begin::Chart widget 18-->
-                                        <div class="card card-flush h-xl-100">
-                                            <!--begin::Header-->
-
-                                            <!--end::Header-->
-
-                                            <!--begin::Body-->
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-title justify-content-center">Clients Locations</h5>
-                                                    <div class="ratio ratio-16x9">
-                                                        <iframe
-                                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12786523.282728717!2d28.0322658!3d-6.369028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x184b5109bcb3b3d5%3A0x2b1866d03d4a6474!2sTanzania!5e0!3m2!1sen!2stz!4v1621780079143!5m2!1sen!2stz"
-                                                            width="100%" height="100%" style="border:0;"
-                                                            allowfullscreen="" loading="lazy">
-                                                        </iframe>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <!--end: Card Body-->
-                                        </div>
-                                        <!--end::Chart widget 18-->
-
-                                    </div>
-                                    <!--end::Col-->
-                                </div>
                                 <!--end::Row-->
                                 <br><br>
 
 
-                                <div class="col-xl-12">
-
-                                    <!--begin::Table widget 14-->
-                                    <div class="card card-flush h-md-100">
-                                        <!--begin::Header-->
-                                        <div class="card-header pt-7">
-                                            <!--begin::Title-->
-                                            <h3 class="card-title align-items-start flex-column">
-                                                <span class="card-label fw-bold text-gray-800">Latest Transaction</span>
-
-                                                <span class="text-gray-500 mt-1 fw-semibold fs-6">Updated 37 minutes
-                                                    ago</span>
-                                            </h3>
-                                        </div>
-                                        <!--end::Header-->
-
-                                        <!--begin::Body-->
-                                        <div class="card-body pt-6">
-                                            <!--begin::Table container-->
-                                            <div class="table-responsive">
-                            <!--begin::Table-->
-                            <table class="table table align-items-center border-warning" id="transactionsTable">
-                                <thead>
-                                    <tr class="fs-5 fw-bold text-dark border-bottom-2">
-                                        <th class="min-w-100px text-center">Transaction ID</th>
-                                        <th class="min-w-150px text-center">Customer</th>
-                                        <th class="min-w-100px text-center">Device ID</th>
-                                        <th class="min-w-100px text-center">Amount</th>
-                                        <th class="min-w-100px text-center">Payment Method</th>
-                                        <th class="min-w-100px text-center">Date</th>
-                                        <th class="min-w-100px text-center">Status</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="fs-4 border-bottom-2 justify-content-center">
-                                        <td class="text-gray-600 fs-6 text-center">TRX-2023-0101</td>
-                                        <td class="text-gray-600 fs-6 text-center">Ahmed Siasa</td>
-                                        <td class="text-gray-600 fs-6 text-center">DEV-1001</td>
-                                        <td class="text-gray-600 fs-6 text-center">TZS 150,000</td>
-                                        <td class="text-gray-600 fs-6 text-center">M-Pesa</td>
-                                        <td class="text-gray-600 fs-6 text-center">10-Nov-2023</td>
-                                        <td class="fs-6 text-center">
-                                            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
-                                                <i class="bi bi-check-circle-fill me-1"></i> Completed
-                                            </span>
-                                        </td>
-                                       
-                                    </tr>
-                                    <tr class="fs-4 border-bottom-2 justify-content-center">
-                                        <td class="text-gray-600 fs-6 text-center">TRX-2023-0102</td>
-                                        <td class="text-gray-600 fs-6 text-center">Jackson Byabato</td>
-                                        <td class="text-gray-600 fs-6 text-center">DEV-1002</td>
-                                        <td class="text-gray-600 fs-6 text-center">TZS 120,000</td>
-                                        <td class="text-gray-600 fs-6 text-center">Tigo Pesa</td>
-                                        <td class="text-gray-600 fs-6 text-center">09-Nov-2023</td>
-                                        <td class="fs-6 text-center">
-                                            <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2">
-                                                <i class="bi bi-exclamation-triangle-fill me-1"></i> Pending
-                                            </span>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr class="fs-4 border-bottom-2 justify-content-center">
-                                        <td class="text-gray-600 fs-6 text-center">TRX-2023-0103</td>
-                                        <td class="text-gray-600 fs-6 text-center">Nasra Kassim</td>
-                                        <td class="text-gray-600 fs-6 text-center">DEV-1003</td>
-                                        <td class="text-gray-600 fs-6 text-center">TZS 180,000</td>
-                                        <td class="text-gray-600 fs-6 text-center">Airtel Money</td>
-                                        <td class="text-gray-600 fs-6 text-center">08-Nov-2023</td>
-                                        <td class="fs-6 text-center">
-                                            <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2">
-                                                <i class="bi bi-x-circle-fill me-1"></i> Failed
-                                            </span>
-                                        </td>
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!--end::Table-->
-                        </div>
-                                        </div>
-                                        <!--end: Card Body-->
-                                    </div>
-                                    <!--end::Table widget 14-->
-                                </div>
-
-
 
                             </div>
-                            <!--end::Content container-->
+                            <!--end: Card Body-->
                         </div>
-                        <!--end::Content-->
-
-                        <script>
-                            var myCarousel = document.querySelector('#kt_sliders_widget_campaigns');
-                            var carousel = new bootstrap.Carousel(myCarousel);
-                        </script>
-
-
+                        <!--end::Table widget 14-->
                     </div>
-                    <!--end::Content wrapper-->
-
-
-                    <!--begin::Footer-->
-                    <div id="kt_app_footer" class="app-footer  py-2 py-lg-4 ">
 
 
 
-                        <!--begin::Footer container-->
-                        <div
-                            class="app-container  container-xxl d-flex flex-column flex-md-row flex-center flex-md-stack ">
-                            <!--begin::Copyright-->
-                            <div class="text-gray-900 order-2 order-md-1">
-                                <span class="text-muted fw-semibold me-1">2025&copy;</span>
-                                <a href="https://SURETECH Systems.co.tz/" target="_blank"
-                                    class="text-gray-800 text-hover-primary">Developed By SURETECH Systems .</a>
-                            </div>
-                            <!--end::Copyright-->
-
-                            <!--begin::Menu-->
-                            <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-                                <li class="menu-item"><a href="#" class="menu-link px-2">Support</a></li>
-
-                            </ul>
-                            <!--end::Menu-->
-                        </div>
-                        <!--end::Footer container-->
-                    </div>
-                    <!--end::Footer-->
                 </div>
-                <!--end:::Main-->
-
-
+                <!--end::Content container-->
             </div>
-            <!--end::Wrapper-->
+            <!--end::Content-->
+
+            <script>
+                var myCarousel = document.querySelector('#kt_sliders_widget_campaigns');
+                var carousel = new bootstrap.Carousel(myCarousel);
+            </script>
 
 
         </div>
-        <!--end::Page-->
+        <!--end::Content wrapper-->
+
+
+        <!--begin::Footer-->
+        <div id="kt_app_footer" class="app-footer  py-2 py-lg-4 ">
+
+
+
+            <!--begin::Footer container-->
+            <div
+                class="app-container  container-xxl d-flex flex-column flex-md-row flex-center flex-md-stack align-items-center ">
+                <!--begin::Copyright-->
+                <div class="text-gray-900 order-2 order-md-1">
+                    <span class="text-muted fw-semibold me-1">2025&copy;</span>
+                    <a href="https://SURETECH Systems.co.tz/" target="_blank"
+                        class="text-gray-800 text-hover-primary">Developed By SURETECH Systems .</a>
+                </div>
+                <!--end::Copyright-->
+
+                <!--begin::Menu-->
+                <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+                    <li class="menu-item"><a href="#" class="menu-link px-2">Support</a></li>
+
+                </ul>
+                <!--end::Menu-->
+            </div>
+            <!--end::Footer container-->
+        </div>
+        <!--end::Footer-->
+    </div>
+    <!--end:::Main-->
+
+
+    </div>
+    <!--end::Wrapper-->
+
+
+    </div>
+    <!--end::Page-->
     </div>
     <!--modals start -->
     <!--modal 1-->
@@ -1557,10 +1212,11 @@
                 <div class="modal-body">
                     <!-- Buttons -->
                     <div class="row g-4 fs-2">
-                        <a href="{{ route('dash.Customers') }}" >
-                        <div class="col-md-12 rounded-2">
-                            <div class="card-box bg-light-warning text-center rounded-2 cursor-pointer" style="text-decoration: none;">Click to Add and manage all customers</div>
-                        </div>
+                        <a href="{{ route('dash.Customers') }}">
+                            <div class="col-md-12 rounded-2">
+                                <div class="card-box bg-light-warning text-center rounded-2 cursor-pointer"
+                                    style="text-decoration: none;">Click to Add and manage all customers</div>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -1571,147 +1227,7 @@
     <!--end of modal 1-->
 
     <!--modal2-->
-    <div class=" modal fade" id="transmodal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-
-
-
-                <!--begin::Table widget 14-->
-                <div class="card card-flush h-md-100">
-                    <!--begin::Header-->
-                    <div class="card-header pt-7">
-                        <!--begin::Title-->
-                        <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bold text-gray-800">Transaction</span>
-
-                            <span class="text-gray-500 mt-1 fw-semibold fs-6">The list of all transaction</span>
-                        </h3>
-                        <!--end::Title-->
-
-                        <!--begin::Toolbar-->
-                        <div class="card-toolbar ms-4 d-flex align-items-center gap-1">
-                            <a href="#" class="btn btn-sm btn-danger">New</a>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <!--end::Toolbar-->
-                    </div>
-                    <div class="card-body pt-6">
-                        <!--begin::Table container-->
-                        <div class="table-responsive">
-                            <!--begin::Table-->
-                            <table class="table table align-items-center ">
-                                <!--begin::Table head-->
-                                <thead>
-                                    <tr class="fs-4 fw-bold text-dark border-bottom-2 ">
-                                        <th class=" min-w-100px text-center">Type </th>
-                                        <th class=" min-w-100px text-center">Created</th>
-                                        <th class=" min-w-100px text-center">Start</th>
-                                        <th class=" min-w-100px text-center ">Expired</th>
-                                        <th class=" min-w-100px text-center ">Agent</th>
-                                        <th class=" min-w-100px text-center ">Region</th>
-                                        <th class=" min-w-100px text-center ">Payment</th>
-                                        <th class=" min-w-100px text-center ">Vehicle</th>
-                                        <th class=" min-w-100px text-center ">Premium</th>
-                                        <th class=" min-w-100px text-center ">Status</th>
-                                        <th class=" min-w-100px text-center "></th>
-                                        <th class=" min-w-100px text-center "></th>
-
-                                    </tr>
-                                </thead>
-                                <!--end::Table head-->
-
-                                <!--begin::Table body-->
-                                <tbody>
-
-                                    <tr class="fs-4 fw-bold text-dark border-bottom-2 ">
-                                        <td class="text-gray-600 fw-bold fs-6 text-center">Motor</td>
-                                        <td class="text-gray-600 fw-bold fs-6">2021-06-08 | 13:44:39</td>
-                                        <td class="text-gray-600 fw-bold fs-6">08 jun 2021</td>
-                                        <td class="text-gray-600 fw-bold fs-6">07 jun 2022</td>
-                                        <td class="text-gray-600 fw-bold fs-6">Sidra Insurance Agency</td>
-                                        <td class="text-gray-600 fw-bold fs-6">Dar es Salaam</td>
-                                        <td class="text-gray-600 fw-bold fs-6">mobile</td>
-                                        <td class="text-gray-600 fw-bold fs-6">MC358CBA</td>
-                                        <td class="text-gray-600 fw-bold fs-6">59,000.00</td>
-                                        <td><button class="btn btn-success btn-sm disabled">Success</button></td>
-                                        <td class="text-gray-600 fw-bold fs-6"><i
-                                                class="fas fa-info fs-2 text-warning ms-8"></i></td>
-                                        <td class="text-gray-600 fw-bold fs-3"><i
-                                                class="bi bi-exclamation-triangle-fill fs-2 text-danger"></i></td>
-                                    </tr>
-
-                                </tbody>
-                                <!--end::Table body-->
-                            </table>
-
-                        </div>
-                        <!--end::Table-->
-                    </div>
-                    <!--end: Card Body-->
-                </div>
-                <!--end::Table widget 14-->
-            </div>
-        </div>
-    </div>
-    <!--modal 02-->
-    <div class="modal fade " id="more" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md-custom">
-            <!-- Optional: modal-lg for larger width -->
-            <div class="modal-content">
-
-                <div class="card card-flush h-md-100">
-                    <!--begin::Header-->
-                    <div class="card-header pt-7">
-                        <div class="card-toolbar ms-4 d-flex align-items-center gap-1">
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="w-100 text-center mb-2 text-success">
-                            <h2>Details</h2>
-                        </div>
-                    </div>
-                    <div class="card-body pt-6">
-                        <div class="row align-items-start ms-4">
-                            <!-- Details Column -->
-                            <div class="col-md-8">
-                                <p><strong>Name:</strong> Mousa Doumba</p>
-                                <p><strong>Expired Date:</strong> 10 July 2025</p>
-                                <p><strong>Vehicle:</strong> Motor</p>
-                                <p><strong>Agent:</strong> Sidra Insurance Agency</p>
-                                <p><strong>Region:</strong> Dar es Salaam</p>
-                                <p><strong>Payment:</strong> Mobile</p>
-                                <p><strong>Premium:</strong> 59,000.00</p>
-                                <p><strong>Start Date:</strong> 09 June 2025</p>
-                                <p><strong>Created At:</strong> 2021-06-08 | 13:44:39</p>
-                            </div>
-
-                            <!-- QR and Button Column -->
-                            <div class="col-md-4 d-flex flex-column align-items-end" style="margin-top: -3%;">
-                                <img src="board_files/qr.png" alt="QRCode" class="img-fluid mb-3"
-                                    style="max-width: 200px; height: auto;">
-
-                                <div class="d-flex align-items-center gap-3">
-                                    <img src="board_files/TIRAlogo.png" alt="TIRA Logo"
-                                        style="width: 50px; height: auto;margin-left: -45%;">
-                                    <button class="btn btn-warning btn-sm px-4 d-flex" style="color: white;">Check
-                                        Status</button>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    <!--modal 02 end-->
-    <!--end of modal 2-->
-
-    <!--modal end-->
-
+    
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
     <script src="../assets/plugins/global/plugins.bundle.js"></script>
     <script src="../assets/js/scripts.bundle.js"></script>
@@ -1794,7 +1310,7 @@
                     }
                 },
                 colors: ['#2E3192'],
-                
+
                 dataLabels: {
                     enabled: true,
                     formatter: function (val) {

@@ -40,11 +40,12 @@
                                     <div class="fw-semibold">10-Nov-2023</div>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <a href="{{ url('dash/index') }}">
-                                    <button class="btn btn-sm btn-outline-light rounded-pill px-3">
-                                        <i class="bi bi-house me-1"></i> Dashboard
-                                    </button>
+                                    <a href="{{ auth()->user()->role === 'admin' ? route('dash.index') : route('dash.dashboard') }}">
+                                        <button class="btn btn-sm btn-outline-light rounded-pill px-3">
+                                            <i class="bi bi-house me-1"></i> Dashboard
+                                        </button>
                                     </a>
+
                                     <div class="card-toolbar ms-4 d-flex align-items-center gap-1">                                       
                                             <button class="btn btn-sm text-white" style="background-color: #2E3192;" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
                                                 <i class="fas fa-plus text-white"></i> Add Customer
@@ -91,7 +92,7 @@
                                         <td class="text-gray-600 fs-6 text-center">+255 {{$customer->phone }}</td>
                                         <td class="text-gray-600 fs-6 text-center">{{ $customer->email }}</td>
                                         <td class="fs-6 text-center">
-                                            @if ($customer->status === 'Active')  
+                                            @if ($customer->status === 'active')  
                                             <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
                                                 <i class="bi bi-check-circle-fill me-1"></i> {{ $customer->status }}
                                             </span>
@@ -118,28 +119,7 @@
                                         </td>
                                     </tr>
                                     @endforeach
-                                    <!--<tr class="fs-4 border-bottom-2 justify-content-center">
-                                        <td class="text-gray-600 fs-6 text-center">CUS-0102</td>
-                                        <td class="text-gray-600 fs-6 text-center">Jackson Byabato</td>
-                                        <td class="text-gray-600 fs-6 text-center">+255 754 123 456</td>
-                                        <td class="text-gray-600 fs-6 text-center">Jackson .byabato@example.com</td>
-                                        <td class="fs-6 text-center">
-                                            <span class="badge bg-warning bg-opacity-10 text-warning px-3 py-2">
-                                                <i class="bi bi-exclamation-triangle-fill me-1"></i> Pending
-                                            </span>
-                                        </td>
-                                        <td class="text-center gap-3">
-                                            <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#viewCustomerModal">
-                                                <i class="bi bi-eye"></i> View
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-warning me-2" data-bs-toggle="modal" data-bs-target="#editCustomerModal">
-                                                <i class="bi bi-pencil"></i> Edit
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteCustomerModal">
-                                                <i class="bi bi-trash"></i> Delete
-                                            </button>
-                                        </td>
-                                    </tr>-->
+                                    
                                 </tbody>
                             </table>
                             <!--end::Table-->
