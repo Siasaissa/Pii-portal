@@ -65,8 +65,12 @@
                             data-bs-target="#uploadModal">
                             <i class="bi bi-upload me-1"></i> Add Model
                         </button>
+                        <button class="btn btn-sm text-white justif" style="background-color:#2E3192;"
+                            data-bs-toggle="modal" data-bs-target="#distributeModal">
+                            <i class="bi bi-branch me-1"></i> Distribute
+                        </button>
                     </div>
-                    
+
 
                     <div class="card-body pt-6">
                         <div class="table-responsive">
@@ -82,16 +86,16 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($trackers as $tracker)
-                                    <tr class="fs-4 border-bottom-2 justify-content-center">
-                                        <td class="text-gray-600 fs-6 text-center">{{ $loop->iteration }}</td>
-                                        <td class="text-gray-600 fs-6 text-center">{{ $tracker->device_name }}</td>
-                                        <td class="text-gray-600 fs-6 text-center">{{ $tracker->imei }}</td>
-                                        <td class="text-gray-600 fs-6 text-center">{{ $tracker->company }}</td>
-                                    </tr>
+                                        <tr class="fs-4 border-bottom-2 justify-content-center">
+                                            <td class="text-gray-600 fs-6 text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-gray-600 fs-6 text-center">{{ $tracker->device_name }}</td>
+                                            <td class="text-gray-600 fs-6 text-center">{{ $tracker->imei }}</td>
+                                            <td class="text-gray-600 fs-6 text-center">{{ $tracker->company }}</td>
+                                        </tr>
                                     @empty
-                                    <tr>
-                                        <td>No device found. Please upload.</td>
-                                    </tr>
+                                        <tr>
+                                            <td>No device found. Please upload.</td>
+                                        </tr>
                                     @endforelse
                                 </tbody>
                             </table>
@@ -561,7 +565,7 @@
             // Initialize DataTables
             $('#trackersTable, #apiTable, #commissionTable').DataTable({
                 responsive: true,
-                pageLength: 10,
+                pageLength: 4,
                 language: {
                     search: "Search:",
                     lengthMenu: "Show _MENU_ entries",
@@ -664,24 +668,100 @@
         });
     </script>
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <form action="{{ route('dash.upload.excel') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Upload Excel</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <input type="file" name="file" class="form-control" required>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary text-white">Import</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+        <div class="modal-dialog">
+            <form action="{{ route('dash.upload.excel') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Upload Excel</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
+                    <div class="modal-body">
+                        <input type="file" name="file" class="form-control" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary text-white">Import</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<div class="modal fade" id="distributeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('dash.distribute') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Choose the distribution plan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    
+                    <!-- Field 1: Distribution Plan -->
+                    <label for="plan" class="form-label">Plan</label>
+                    <select name="plan" id="plan" class="form-control">
+                        <option value="all">All Users</option>
+                        <option value="specific">Specific User</option>
+                    </select>
+
+                    <!-- Default: All Users -->
+                    <label for="targetInput" class="form-label mt-3">Target</label>
+                    <input type="text" id="targetInput" name="target" 
+                           class="form-control" value="All Users" readonly>
+
+                    <!-- Datalist for Specific -->
+                    <input type="text" id="targetSearch" name="target_user" 
+                           class="form-control mt-2 d-none" 
+                           placeholder="Type name, email or number..." 
+                           list="targetSelect">
+
+                    <datalist id="targetSelect">
+                        @foreach($users as $user)
+                            <option value="{{ $user->email }}">
+                                {{ $user->name }} - {{ $user->email }} - {{ $user->phone }}
+                            </option>
+                        @endforeach
+                    </datalist>
+
+                    <!-- Number input (only for specific user) -->
+                    <input type="number" id="numberInput" name="number" 
+                           class="form-control mt-2 d-none" 
+                           placeholder="Enter number...">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary text-white">Distribute</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const plan = document.getElementById("plan");
+    const targetInput = document.getElementById("targetInput");
+    const targetSearch = document.getElementById("targetSearch");
+    const numberInput = document.getElementById("numberInput");
+
+    plan.addEventListener("change", function () {
+        if (this.value === "all") {
+            // Show "All Users"
+            targetInput.classList.remove("d-none");
+            targetInput.value = "All Users";
+            targetSearch.classList.add("d-none");
+            numberInput.classList.add("d-none");
+        } else {
+            // Show user search + number input
+            targetInput.classList.add("d-none");
+            targetSearch.classList.remove("d-none");
+            numberInput.classList.remove("d-none");
+        }
+    });
+});
+</script>
+
+
 </body>
 
 </html>

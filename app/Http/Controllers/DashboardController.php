@@ -16,6 +16,7 @@ public function index(Request $request)
 
     // detect which route was used
     if ($request->routeIs('dash.dashboard')) {
+        
         return view('dash.dashboard', compact('vehicles', 'total'));
     }
 

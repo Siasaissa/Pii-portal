@@ -143,11 +143,24 @@ public function store(Request $request)
                      ->with('success', 'Trip added successfully!');
 }
 
-public function view(){
+public function view()
+{
+    $user = auth()->user();
 
-  $unassigned = Upload::all();
-  return view('dash.UnAssigned' , compact('unassigned'));
+    $query = Upload::where('status', 'active');
+
+    if ($user->role === 'admin') {
+        $query->whereNull('user_id'); // only unassigned uploads
+    } else {
+        $query->where('user_id', $user->id); // only uploads assigned to this user
+    }
+
+    $unassigned = $query->get();
+
+    return view('dash.UnAssigned', compact('unassigned'));
 }
+
+
 
 
 }

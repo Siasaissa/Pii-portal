@@ -72,6 +72,10 @@ Route::middleware('auth')->prefix('dash')->name('dash.')->group(function () {
 
         Route::get('/Quotation', [CustomerDeviceAssignmentController::class, 'create'])->name('Quotation');
         Route::post('/Quotation/store', [CustomerDeviceAssignmentController::class, 'store'])->name('Quotation.store');
+
+        Route::get('/UnAssigned', [TripController::class, 'view'])->name('UnAssigned');
+
+        Route::post('/distribute', [UploadController::class, 'distribute'])->name('distribute');
     });
 
     /*
@@ -125,7 +129,7 @@ Route::middleware('auth')->prefix('dash')->name('dash.')->group(function () {
         // Tracker
         Route::post('/tracker/store', [TripController::class, 'store'])->name('tracker.store');
         Route::get('/sync-trips', [TripController::class, 'syncTrips'])->name('sync.trips');
-        Route::get('/UnAssigned', [TripController::class, 'view'])->name('UnAssigned');
+        
 
         // Upload
         Route::post('/upload-excel', [UploadController::class, 'import'])->name('upload.excel');

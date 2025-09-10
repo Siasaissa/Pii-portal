@@ -12,6 +12,7 @@ class CustomerDeviceAssignment extends Model
     protected $fillable = [
         'customer_email',
         'device_imei',
+        'tarriff',
     ];
 
     public function customer()

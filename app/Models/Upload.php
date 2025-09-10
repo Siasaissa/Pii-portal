@@ -14,5 +14,7 @@ class Upload extends Model
         'date',
         'imei',
         'company',
+        'user_id',
+        'status',
     ];
 }

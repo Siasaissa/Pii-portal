@@ -354,33 +354,8 @@
 
 
                                                 <!--begin::Title-->
-                                                <h3 class="card-title align-items-start flex-column text-white pt-15">
-                                                    <span class="fw-bold fs-2x mb-3">Total Transactions</span>
-
-                                                    <div class="fs-4 text-white">
-
-
-                                                        <span class="position-relative d-inline-block">
-                                                            <a href="../pages/user-profile/projects.html"
-                                                                class="text-white fs-2x fw-bold d-block mb-1">Tsh.
-                                                                100,000,000.00 </a>
-
-                                                            <!--begin::Separator-->
-                                                            <span
-                                                                class="position-absolute opacity-50 bottom-0 start-0 border-2 border-body border-bottom w-100"></span>
-                                                            <!--end::Separator-->
-                                                        </span>
-
-
-                                                    </div>
-                                                </h3>
-                                                <!--end::Title-->
-
-                                                <!--begin::Toolbar-->
+                                                <h1 class="card-title align-items-center flex-column text-white pt-15" style="font-size: 5rem; color: rgb(12, 12, 138);!important ">PII AGENT</h1>
                                                 <div class="card-toolbar pt-5">
-                                                    <!--begin::Menu Trigger Button-->
-
-                                                    <!--end::Menu Trigger Button-->
 
                                                     <!--begin::Menu-->
                                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"

@@ -3,35 +3,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customers;
+use App\Models\tarriff;
 use App\Models\Upload;
 use App\Models\CustomerDeviceAssignment;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CustomerDeviceAssignmentController extends Controller
 {
     // Show assignment form
 public function create()
 {
-    $user = auth()->user(); // currently logged-in user
+    $user = auth()->user();
 
     if ($user->role === 'admin') {
-        // Admin sees all pending customers
         $customers = Customers::where('status', 'pending')->get();
     } else {
-        // Regular users see only their own pending customers
         $customers = Customers::where('status', 'pending')
                               ->where('user_id', $user->id)
                               ->get();
     }
 
-    // Only fetch active devices
     $devices = Upload::where('status', 'active')->get();
 
-    // Existing assignments
-    $CustomerAll = CustomerDeviceAssignment::all();
+    $CustomerAll = CustomerDeviceAssignment::all()->map(function($assignment) {
+        $created = Carbon::parse($assignment->created_at);
 
-    // Pass full customer details to the view
-    return view('dash.Quotation', compact('customers', 'devices', 'CustomerAll'));
+        // Determine total duration in seconds based on tariff
+        switch(strtolower($assignment->tarriff)) {
+            case 'annual':
+                $totalSeconds = 365 * 24 * 60 * 60;
+                break;
+            case 'quarterly':
+                $totalSeconds = 90 * 24 * 60 * 60;
+                break;
+            case 'monthly':
+                $totalSeconds = 30 * 24 * 60 * 60;
+                break;
+            default:
+                $totalSeconds = 0;
+        }
+
+        // Calculate the target end time
+        $assignment->end_time = $created->addSeconds($totalSeconds)->timestamp; // Unix timestamp
+
+        return $assignment;
+    });
+
+    $tariff = tarriff::where('status', 'active')->get();
+
+    return view('dash.Quotation', compact('customers', 'devices', 'CustomerAll','tariff'));
 }
 
 
@@ -45,6 +66,7 @@ public function create()
         $validated = $request->validate([
             'customer_email' => 'required|exists:customers,email|unique:customer_device_assignments,customer_email',
             'device_imei'    => 'required|exists:uploads,imei|unique:customer_device_assignments,device_imei',
+            'tarriff' => 'required|string',
         ]);
 
         // 2️⃣ Create assignment
@@ -58,7 +80,7 @@ public function create()
         Upload::where('imei', $validated['device_imei'])
             ->update(['status' => 'inactive']);
 
-        // ✅ Success notification
+        //  Success notification
         return redirect()->back()->with('success', 'Device assigned successfully!');
 
     } catch (\Illuminate\Validation\ValidationException $e) {

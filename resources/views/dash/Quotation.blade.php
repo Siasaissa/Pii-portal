@@ -40,7 +40,8 @@
                                     <div class="fw-semibold">10-Nov-2023</div>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <a href="{{ auth()->user()->role === 'admin' ? route('dash.index') : route('dash.dashboard') }}">
+                                    <a
+                                        href="{{ auth()->user()->role === 'admin' ? route('dash.index') : route('dash.dashboard') }}">
                                         <button class="btn btn-sm btn-outline-light rounded-pill px-3">
                                             <i class="bi bi-house me-1"></i> Dashboard
                                         </button>
@@ -80,18 +81,23 @@
                                         <th class="min-w-100px text-center">ID</th>
                                         <th class="min-w-100px text-center">Customer Email</th>
                                         <th class="min-w-150px text-center">Device Imei</th>
+                                        <th class="min-w-150px text-center">Tariff</th>
                                         <th class="min-w-150px text-center">Assigned Day</th>
-                                        
+                                        <th class="min-w-150px text-center">Remain Days</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($CustomerAll as $Customer)
-                                    <tr class="fs-4 border-bottom-2 justify-content-center">
-                                        <td class="text-gray-600 fs-6 text-center">{{ $loop->iteration }}</td>
-                                        <td class="text-gray-600 fs-6 text-center">{{ $Customer->customer_email }}</td>
-                                        <td class="text-gray-600 fs-6 text-center">{{ $Customer->device_imei }}</td>
-                                        <td class="text-gray-600 fs-6 text-center">{{ $Customer->created_at }}</td>
-                                    </tr>
+                                        <tr class="fs-4 border-bottom-2 justify-content-center">
+                                            <td class="text-gray-600 fs-6 text-center">{{ $loop->iteration }}</td>
+                                            <td class="text-gray-600 fs-6 text-center">{{ $Customer->customer_email }}</td>
+                                            <td class="text-gray-600 fs-6 text-center">{{ $Customer->device_imei }}</td>
+                                            <td class="text-gray-600 fs-6 text-center">{{ $Customer->tarriff }}</td>
+                                            <td class="text-gray-600 fs-6 text-center">{{ $Customer->created_at }}</td>
+                                            <td class="text-gray-600 fs-6 text-center"><span class="countdown"
+                                                    data-endtime="{{ $Customer->end_time }}"></span></td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -105,8 +111,7 @@
         </div>
     </div>
 
-    <!-- View Customer Modal -->
-
+    <!-- payment modal Modal -->
     <div class="modal fade" id="viewCustomerModal" tabindex="-1" aria-labelledby="viewCustomerModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -289,11 +294,12 @@
         </div>
     </div>
     <!-- Add Customer Modal -->
-    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header  text-white" style="background-color: #F9A61A;">
-                    <h5 class="modal-title" id="addCustomerModalLabel">Add New Customer</h5>
+                    <h5 class="modal-title" id="addCustomerModalLabel">Assign New Customer</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -301,32 +307,46 @@
                     @csrf
 
                     <!-- Select Customer -->
-                     <div class="modal-body row g-3">
-                    <div class="mb-3">
-                        <label for="customer_email" class="form-label">Customer (Email)</label>
-                        <input list="customers" id="customer_email" name="customer_email" class="form-control" required>
-                        <datalist id="customers">
-                            @foreach($customers as $customer)
-                                <option value="{{ $customer->email }}">{{ $customer->name }} ({{ $customer->email }})</option>
-                            @endforeach
-                        </datalist>
-                    </div>
+                    <div class="modal-body row g-3">
+                        <div class="mb-3">
+                            <label for="customer_email" class="form-label">Customer (Email)</label>
+                            <input list="customers" id="customer_email" name="customer_email" class="form-control"
+                                required>
+                            <datalist id="customers">
+                                @foreach($customers as $customer)
+                                    <option value="{{ $customer->email }}">{{ $customer->name }} ({{ $customer->email }})
+                                    </option>
+                                @endforeach
+                            </datalist>
+                        </div>
 
-                    <!-- Device -->
-                    <div class="mb-3">
-                        <label for="device_imei" class="form-label">Device (IMEI)</label>
-                        <input list="devices" id="device_imei" name="device_imei" class="form-control" required>
-                        <datalist id="devices">
-                            @foreach($devices as $device)
-                                <option value="{{ $device->imei }}">{{ $device->device_name }} ({{ $device->imei }})</option>
-                            @endforeach
-                        </datalist>
-                    </div>
+                        <!-- Device -->
+                        <div class="mb-3">
+                            <label for="device_imei" class="form-label">Device (IMEI)</label>
+                            <input list="devices" id="device_imei" name="device_imei" class="form-control" required>
+                            <datalist id="devices">
+                                @foreach($devices as $device)
+                                    <option value="{{ $device->imei }}">{{ $device->device_name }} ({{ $device->imei }})
+                                    </option>
+                                @endforeach
+                            </datalist>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tarriff" class="form-label">Select Tarriff</label>
+                            <input list="tarriff" id="billing_cycle" name="tarriff" class="form-control" required>
+                            <datalist id="tarriff">
+                                @foreach($tariff as $tarriff)
+                                    <option value="{{ $tarriff->billing_cycle }}">{{ $tarriff->name }}
+                                        ({{ $tarriff->amount }})</option>
+                                @endforeach
+                            </datalist>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary text-white">Assign</button>
+                        <button type="submit" class="btn btn-primary text-white">Assign</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -357,7 +377,7 @@
     </script>
 
     <script>
-                $(document).ready(function () {
+        $(document).ready(function () {
             $('.confirm-delete-checkbox').on('change', function () {
                 let modal = $(this).closest('.modal');
                 let btn = modal.find('.confirm-delete-btn');
@@ -424,6 +444,38 @@
             toast.addEventListener('click', () => bsToast.hide());
         }
     </script>
+    <script>
+        function startCountdown() {
+            const countdownElements = document.querySelectorAll('.countdown');
+
+            countdownElements.forEach(el => {
+                const endTime = parseInt(el.getAttribute('data-endtime')) * 1000; // convert to ms
+
+                function update() {
+                    const now = new Date().getTime();
+                    let distance = endTime - now;
+
+                    if (distance < 0) {
+                        el.innerHTML = '<span class="badge bg-danger">Expired</span>';
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    el.innerHTML = `<span class="badge bg-success bg-opacity-10 text-success px-3 py-2 ms-4 d-inline-flex align-items-center"><i class="bi bi-clock-history me-2">    ${days}d || ${hours}h ${minutes}m ${seconds}s</span>`;
+                }
+
+                update(); // initial call
+                setInterval(update, 1000); // update every second
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', startCountdown);
+    </script>
+
 
 
     <!--updated-->

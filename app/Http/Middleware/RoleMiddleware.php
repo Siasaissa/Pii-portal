@@ -10,20 +10,19 @@ class RoleMiddleware
     /**
      * Handle an incoming request.
      */
-public function handle(Request $request, Closure $next, $roles)
+public function handle(Request $request, Closure $next, ...$roles)
 {
     if (!Auth::check()) {
         return redirect()->route('login.form');
     }
 
-    // Convert roles string into array (e.g. "user,customer" → ["user", "customer"])
-    $rolesArray = is_array($roles) ? $roles : explode(',', $roles);
-
-    if (! in_array(auth()->user()->role, $rolesArray)) {
+    // Now $roles is already an array: ['user', 'admin']
+    if (! in_array(auth()->user()->role, $roles)) {
         abort(403, 'Unauthorized action.');
     }
 
     return $next($request);
 }
+
 
 }
