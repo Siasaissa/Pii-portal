@@ -684,7 +684,7 @@
                                                                     <div class="m-0">
                                                                         <h4 class="fw-bold  mb-3 animate__animated animate__fadeInRight"
                                                                             style="color: #2E3192;">
-                                                                            Total Services
+                                                                            Assigned Customers
                                                                         </h4>
 
                                                                         <div class="d-flex d-grid gap-5">
@@ -699,7 +699,7 @@
                                                                                         <span class="path3"></span>
                                                                                     </i>
                                                                                     <span class="fs-1  ms-1"
-                                                                                        style="color: #2E3192;">12</span>
+                                                                                        style="color: #2E3192;">{{ $Assigned}}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -737,7 +737,7 @@
                                                                     <div class="m-0">
                                                                         <h4 class="fw-bold  mb-3 animate__animated animate__fadeInRight"
                                                                             style="color: #2E3192;">
-                                                                            Total Renewals
+                                                                            Available Devices
                                                                         </h4>
 
                                                                         <div class="d-flex d-grid gap-5">
@@ -747,7 +747,7 @@
                                                                                     style="animation-delay: 0.1s">
 
                                                                                     <span class="fs-2  ms-1"
-                                                                                        style="color: #2E3192;">101</span>
+                                                                                        style="color: #2E3192;">{{ $Available }}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -785,7 +785,7 @@
                                                                     <div class="m-0">
                                                                         <h4 class="fw-bold mb-3 animate__animated animate__fadeInRight"
                                                                             style="color: #2E3192 ;">
-                                                                            Total Customers
+                                                                            Active Customers
                                                                         </h4>
 
                                                                         <div class="d-flex d-grid gap-5">
@@ -795,7 +795,7 @@
                                                                                     style="animation-delay: 0.1s">
 
                                                                                     <span class="fs-2 ms-1"
-                                                                                        style="color: #2E3192;">100</span>
+                                                                                        style="color: #2E3192;">{{ $ActiveCustomer }}</span>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1143,7 +1143,7 @@
                 <div class="text-gray-900 order-2 order-md-1">
                     <span class="text-muted fw-semibold me-1">2025&copy;</span>
                     <a href="https://SURETECH Systems.co.tz/" target="_blank"
-                        class="text-gray-800 text-hover-primary">Developed By SURETECH Systems .</a>
+                        class="text-gray-800 text-hover-primary">Developed By PII .</a>
                 </div>
                 <!--end::Copyright-->
 

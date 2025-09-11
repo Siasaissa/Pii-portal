@@ -81,31 +81,38 @@ public function distribute(Request $request)
 
     // --- If distribution is for specific user ---
     if ($plan === 'specific') {
-        $userId = $request->input('target_user');
-        $number = (int) $request->input('number');
+    $userInput = $request->input('target_user');
+    $number = (int) $request->input('number');
 
-        if (!$userId || $number <= 0) {
-            return back()->with('error', 'Please select a valid user and number.');
-        }
-
-        // Pick the first $number active uploads
-        $uploads = \DB::table('uploads')
-            ->where('status', 'active')
-            ->limit($number)
-            ->pluck('id');
-
-        if ($uploads->isEmpty()) {
-            return back()->with('error', 'No active uploads available.');
-        }
-
-        \DB::table('uploads')
-            ->whereIn('id', $uploads)
-            ->update(['user_id' => $userId]);
-
-        return back()->with('success', "Assigned {$uploads->count()} uploads to the selected user.");
+    if (!$userInput || $number <= 0) {
+        return back()->with('error', 'Please select a valid user and number.');
     }
 
-    return back()->with('error', 'Invalid distribution plan.');
-}
+    // Find user by ID or email (depending on how your form sends it)
+    $user = User::where('id', $userInput)
+                ->orWhere('email', $userInput)
+                ->first();
 
+    if (!$user) {
+        return back()->with('error', 'User not found.');
+    }
+
+    // Pick only uploads that are active AND not yet assigned
+    $uploads = \DB::table('uploads')
+        ->where('status', 'active')
+        ->whereNull('user_id')
+        ->limit($number)
+        ->pluck('id');
+
+    if ($uploads->isEmpty()) {
+        return back()->with('error', 'No unassigned uploads available.');
+    }
+
+    \DB::table('uploads')
+        ->whereIn('id', $uploads)
+        ->update(['user_id' => $user->id]);
+
+    return back()->with('success', "Assigned {$uploads->count()} uploads to {$user->name}.");
+    }
+}
 }

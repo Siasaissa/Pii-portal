@@ -56,7 +56,7 @@
                 <!--end of header-->
 
                 <!-- Tracker Models Section -->
-                <div class="card card-flush mb-5">
+                <div class="card card-flush mb-2">
                     <div class="card-header d-flex justify-content-between align-items-center pt-2">
                         <div>
                             <h3 class="mt-2 text-warning mb-0">Manage Tracker Models</h3>
@@ -67,7 +67,7 @@
                         </button>
                         <button class="btn btn-sm text-white justif" style="background-color:#2E3192;"
                             data-bs-toggle="modal" data-bs-target="#distributeModal">
-                            <i class="bi bi-branch me-1"></i> Distribute
+                            <i class="bi bi-arrows-move me-1"></i> Distribute
                         </button>
                     </div>
 
@@ -94,7 +94,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td>No device found. Please upload.</td>
+                                            <td colspan="4" class="text-center text-muted">No device found. Please upload.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -686,81 +686,148 @@
             </form>
         </div>
     </div>
-<div class="modal fade" id="distributeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="{{ route('dash.distribute') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Choose the distribution plan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <div class="modal fade" id="distributeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form action="{{ route('dash.distribute') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Choose the distribution plan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <!-- Field 1: Distribution Plan -->
+                        <label for="plan" class="form-label">Plan</label>
+                        <select name="plan" id="plan" class="form-control">
+                            <option value="all">All Users</option>
+                            <option value="specific">Specific User</option>
+                        </select>
+
+                        <!-- Default: All Users -->
+                        <label for="targetInput" class="form-label mt-3">Target</label>
+                        <input type="text" id="targetInput" name="target" class="form-control" value="All Users"
+                            readonly>
+
+                        <!-- Datalist for Specific -->
+                        <input type="text" id="targetSearch" name="target_user" class="form-control mt-2 d-none"
+                            placeholder="Type name, email or number..." list="targetSelect">
+
+                        <datalist id="targetSelect">
+                            @foreach($users as $user)
+                                <option value="{{ $user->id }}">
+                                    {{ $user->name }} - {{ $user->email }}
+                                </option>
+                            @endforeach
+                        </datalist>
+
+
+                        <!-- Number input (only for specific user) -->
+                        <input type="number" id="numberInput" name="number" class="form-control mt-2 d-none"
+                            placeholder="Enter number...">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary text-white">Distribute</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    
-                    <!-- Field 1: Distribution Plan -->
-                    <label for="plan" class="form-label">Plan</label>
-                    <select name="plan" id="plan" class="form-control">
-                        <option value="all">All Users</option>
-                        <option value="specific">Specific User</option>
-                    </select>
-
-                    <!-- Default: All Users -->
-                    <label for="targetInput" class="form-label mt-3">Target</label>
-                    <input type="text" id="targetInput" name="target" 
-                           class="form-control" value="All Users" readonly>
-
-                    <!-- Datalist for Specific -->
-                    <input type="text" id="targetSearch" name="target_user" 
-                           class="form-control mt-2 d-none" 
-                           placeholder="Type name, email or number..." 
-                           list="targetSelect">
-
-                    <datalist id="targetSelect">
-                        @foreach($users as $user)
-                            <option value="{{ $user->email }}">
-                                {{ $user->name }} - {{ $user->email }} - {{ $user->phone }}
-                            </option>
-                        @endforeach
-                    </datalist>
-
-                    <!-- Number input (only for specific user) -->
-                    <input type="number" id="numberInput" name="number" 
-                           class="form-control mt-2 d-none" 
-                           placeholder="Enter number...">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary text-white">Distribute</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const plan = document.getElementById("plan");
-    const targetInput = document.getElementById("targetInput");
-    const targetSearch = document.getElementById("targetSearch");
-    const numberInput = document.getElementById("numberInput");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const plan = document.getElementById("plan");
+            const targetInput = document.getElementById("targetInput");
+            const targetSearch = document.getElementById("targetSearch");
+            const numberInput = document.getElementById("numberInput");
 
-    plan.addEventListener("change", function () {
-        if (this.value === "all") {
-            // Show "All Users"
-            targetInput.classList.remove("d-none");
-            targetInput.value = "All Users";
-            targetSearch.classList.add("d-none");
-            numberInput.classList.add("d-none");
-        } else {
-            // Show user search + number input
-            targetInput.classList.add("d-none");
-            targetSearch.classList.remove("d-none");
-            numberInput.classList.remove("d-none");
-        }
-    });
+            plan.addEventListener("change", function () {
+                if (this.value === "all") {
+                    // Show "All Users"
+                    targetInput.classList.remove("d-none");
+                    targetInput.value = "All Users";
+                    targetSearch.classList.add("d-none");
+                    numberInput.classList.add("d-none");
+                } else {
+                    // Show user search + number input
+                    targetInput.classList.add("d-none");
+                    targetSearch.classList.remove("d-none");
+                    numberInput.classList.remove("d-none");
+                }
+            });
+        });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            $('.confirm-delete-checkbox').on('change', function () {
+                let modal = $(this).closest('.modal');
+                let btn = modal.find('.confirm-delete-btn');
+                btn.prop('disabled', !$(this).is(':checked'));
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const toastContainer = document.getElementById('toast-container');
+
+            @if(session('success'))
+                showNotification('{{ session('success') }}', 'success');
+            @endif
+
+            @if(session('error'))
+                showNotification('{{ session('error') }}', 'danger');
+            @endif
+
+            @if(session('warning'))
+                showNotification('{{ session('warning') }}', 'warning');
+            @endif
 });
-</script>
 
+        function showNotification(message, type) {
+            const toastContainer = document.getElementById('toast-container');
+
+            const toast = document.createElement('div');
+            toast.className = `toast show align-items-center custom-toast toast-${type} bg-light border-0`;
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+
+            // Set icon based on type
+            let icon = 'bi-info-circle';
+            let iconColor = 'text-info';
+            if (type === 'success') {
+                icon = 'bi-check-circle';
+                iconColor = 'text-success';
+            } else if (type === 'danger') {
+                icon = 'bi-x-circle';
+                iconColor = 'text-danger';
+            } else if (type === 'warning') {
+                icon = 'bi-exclamation-triangle';
+                iconColor = 'text-warning';
+            }
+
+            toast.innerHTML = `
+        <div class="d-flex align-items-center px-3 py-2">
+            <i class="bi ${icon} toast-icon ${iconColor}"></i>
+            <div class="toast-body">${message}</div>
+            <button type="button" class="btn-close ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    `;
+
+            toastContainer.appendChild(toast);
+
+            const bsToast = new bootstrap.Toast(toast, {
+                autohide: true,
+                delay: 5000
+            });
+            bsToast.show();
+
+            toast.addEventListener('hidden.bs.toast', () => toast.remove());
+            toast.addEventListener('click', () => bsToast.hide());
+        }
+    </script>
 
 </body>
 

@@ -15,6 +15,7 @@ use App\Http\Controllers\Authentication\ForgotPasswordController;
 use App\Http\Controllers\CustomerDeviceAssignmentController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\UploadController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,8 @@ Route::middleware('auth')->prefix('dash')->name('dash.')->group(function () {
         Route::get('/UnAssigned', [TripController::class, 'view'])->name('UnAssigned');
 
         Route::post('/distribute', [UploadController::class, 'distribute'])->name('distribute');
+
+        Route::get('/dashboard', [DashboardController::class, 'overview'])->name('dashboard');
     });
 
     /*

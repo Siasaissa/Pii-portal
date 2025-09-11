@@ -148,7 +148,7 @@
                                 <i class="bi bi-person-circle" style="font-size: 5rem; color: #2E3192;"></i>
                             </div>
                             <h5>{{ $customer->name }}</h5>
-                            @if ($customer->status === 'Active')  
+                            @if ($customer->status === 'active')  
                             <span class="badge bg-success bg-opacity-10 text-success px-3 py-2">
                                 <i class="bi bi-check-circle-fill me-1"></i> {{ $customer->status }}
                             </span>

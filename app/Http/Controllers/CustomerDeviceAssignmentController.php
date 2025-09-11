@@ -23,8 +23,10 @@ public function create()
                               ->where('user_id', $user->id)
                               ->get();
     }
-
-    $devices = Upload::where('status', 'active')->get();
+    
+    $devices = Upload::where('status', 'active')
+                        ->where('user_id', $user->id)
+                        ->get();
 
     $CustomerAll = CustomerDeviceAssignment::all()->map(function($assignment) {
         $created = Carbon::parse($assignment->created_at);
@@ -62,21 +64,21 @@ public function create()
     public function store(Request $request)
 {
     try {
-        // 1️⃣ Validate input
+        //  Validate input
         $validated = $request->validate([
             'customer_email' => 'required|exists:customers,email|unique:customer_device_assignments,customer_email',
             'device_imei'    => 'required|exists:uploads,imei|unique:customer_device_assignments,device_imei',
             'tarriff' => 'required|string',
         ]);
 
-        // 2️⃣ Create assignment
+        //  Create assignment
         CustomerDeviceAssignment::create($validated);
 
-        // 3️⃣ Update customer status
+        //  Update customer status
         Customers::where('email', $validated['customer_email'])
             ->update(['status' => 'active']);
 
-        // 4️⃣ Update device status
+        //  Update device status
         Upload::where('imei', $validated['device_imei'])
             ->update(['status' => 'inactive']);
 

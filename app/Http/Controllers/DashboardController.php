@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CustomerDeviceAssignment;
+use App\Models\Upload;
 use Illuminate\Http\Request;
 use App\Models\Customers;
 use App\Models\Vehicle;
 use App\Models\Service;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 class DashboardController extends Controller
 {
@@ -38,6 +41,26 @@ public function totalCustomers()
     return view('dash.index', compact('totalCustomer','totalService', 'customers'));
 }
 
+
+//getting the data for the agents overview
+
+public function overview(){
+
+    $user = auth()->user();
+
+    $ActiveCustomer = Customers::where('status', 'active')
+                                ->where('user_id', $user->id)
+                                ->count();
+    
+    $Available = Upload::where('status', 'active')
+                        ->where('user_id', $user->id)
+                        ->count();
+
+    $Assigned = CustomerDeviceAssignment::all()->count();
+                                         
+
+    return view('dash.Dashboard', compact('ActiveCustomer','Available','Assigned'));
+}
 
 
 }
